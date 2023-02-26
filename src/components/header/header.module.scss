@@ -1,0 +1,40 @@
+.header {
+  display: grid;
+  grid-template-columns: auto 103px 131px;
+  height: 80px;
+  align-items: center;
+  padding: 0 22px 0 22px;
+}
+
+.title {
+  justify-self: start;
+  font-family: 'Inter UI', sans-serif;
+  font-size: 18px;
+  line-height: 28px;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.button-in {
+  justify-self: end;
+  width: 84px;
+  height: 35px;
+  border: none;
+  background: none;
+  font-family: 'Inter UI', sans-serif;
+  font-size: 18px;
+  line-height: 28px;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.button-up {
+  justify-self: end;
+  width: 109px;
+  height: 51px;
+  border: 1px solid #52C41A;
+  border-radius: 5px;
+  font-family: 'Inter UI', sans-serif;
+  font-size: 18px;
+  line-height: 28px;
+  color: #52C41A;
+  background: #FFFFFF;
+}

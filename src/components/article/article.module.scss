@@ -1,0 +1,96 @@
+.article {
+  display: grid;
+  grid-template-columns: 65% auto;
+  justify-items: start;
+  width: 941px;
+  background: #ffffff;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px 1px rgba(0,0,0,0.3);
+  padding: 15px 14px 24px 19px;
+  margin-top: 26px;
+}
+
+.article-full {
+  display: grid;
+  grid-template-columns: 65% auto;
+  justify-items: start;
+  width: 941px;
+  min-height: 870px;
+  background: #ffffff;
+  box-shadow: 2px 2px 5px 1px rgba(0,0,0,0.3);
+  padding: 15px 14px 24px 19px;
+  margin-top: 26px;
+}
+
+.article-title {
+  font-family: 'Inter UI', sans-serif;
+  font-size: 20px;
+  line-height: 28px;
+  color: #1890FF;
+}
+
+.article-likes {
+  font-family: 'Inter UI', sans-serif;
+  font-size: 12px;
+  line-height: 22px;
+  color: rgba(0, 0, 0, 0.75);
+}
+
+.article-tag {
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 2px;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  color: rgba(0, 0, 0, 0.5);
+  width: max-content;
+  padding: 0 2px 0 2px;
+  margin-right: 8px;
+}
+
+.article-author {
+  display: grid;
+  grid-template-columns: auto 60px;
+  justify-self: end;
+}
+
+.name {
+  display: grid;
+  justify-self: end;
+  text-align: right;
+  font-family: 'Inter UI', sans-serif;
+  font-size: 18px;
+  line-height: 28px;
+  color: rgba(0, 0, 0, 0.85);
+  padding-right: 12px;
+}
+
+.date {
+  display: grid;
+  justify-self: end;
+  text-align: right;
+  font-family: 'Inter UI', sans-serif;
+  font-size: 12px;
+  line-height: 22px;
+  color: rgba(0, 0, 0, 0.5);
+  padding-right: 12px;
+}
+
+.avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+}
+
+.text {
+  font-family: 'Inter UI', sans-serif;
+  font-size: 12px;
+  line-height: 22px;
+  color: rgba(0, 0, 0, 0.75);
+}
+
+.tags-list {
+  display: flex;
+}
