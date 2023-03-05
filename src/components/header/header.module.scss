@@ -1,9 +1,14 @@
 .header {
   display: grid;
-  grid-template-columns: auto 103px 131px;
+  grid-template-columns: auto auto;
   height: 80px;
   align-items: center;
   padding: 0 22px 0 22px;
+}
+
+.header-buttons {
+  justify-self: end;
+  align-self: center;
 }
 
 .title {
@@ -13,8 +18,14 @@
   line-height: 28px;
   color: rgba(0, 0, 0, 0.85);
 }
+.buttons {
+  display: grid;
+  grid-template-columns: auto auto;
+}
 
 .button-in {
+  text-decoration: none;
+  align-self: center;
   justify-self: end;
   width: 84px;
   height: 35px;
@@ -27,6 +38,9 @@
 }
 
 .button-up {
+  display: grid;
+  text-decoration: none;
+  text-align: center;
   justify-self: end;
   width: 109px;
   height: 51px;
@@ -37,4 +51,54 @@
   line-height: 28px;
   color: #52C41A;
   background: #FFFFFF;
+}
+
+.button-out {
+  width: 109px;
+  height: 51px;
+  border: 1px solid rgba(0, 0, 0, 0.75);
+  border-radius: 5px;
+  font-family: 'Inter UI', sans-serif;
+  font-size: 18px;
+  line-height: 28px;
+  color: rgba(0, 0, 0, 0.75);
+  background: #FFFFFF;
+}
+
+.button-crt {
+  align-self: center;
+  width: 112px;
+  height: 31px;
+  border: 1px solid #52C41A;
+  border-radius: 5px;
+  font-family: 'Inter UI', sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  color: #52C41A;
+  background: #FFFFFF;
+}
+
+.button-text {
+  vertical-align: middle;
+  align-self: center;
+}
+
+.profile {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+}
+
+.name {
+  font-family: 'Inter UI', sans-serif;
+  font-size: 18px;
+  line-height: 28px;
+  color: rgba(0, 0, 0, 0.85);
+  padding-right: 12px;
+  align-self: center;
+}
+
+.avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
 }

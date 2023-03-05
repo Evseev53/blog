@@ -47,6 +47,7 @@
     "no-unneeded-ternary": "off",
     "no-unused-expressions": "off",
     "react-hooks/exhaustive-deps": "off",
+    "no-param-reassign": "off",
     "import/order": [
       2,
       {

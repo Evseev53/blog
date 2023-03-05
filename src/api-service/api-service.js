@@ -17,3 +17,48 @@ export async function getFullArticle (slug) {
   }
   return console.error(response.status);
 }
+
+export async function sendNewUser (newUser) {
+  const response = await fetch(`${url}users`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    },
+    body: JSON.stringify(newUser)
+  })
+  const json = await response.json();
+  return json;
+}
+
+export async function userLogin (userObj) {
+  const response = await fetch(`${url}users/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    },
+    body: JSON.stringify(userObj)
+  })
+  const json = await response.json();
+  return json;
+}
+
+export async function getCurrentUser (token) {
+  const response = await fetch(`${url}user`, {
+    headers: {Authorization: `Token ${token}`}
+  })
+  const json = await response.json();
+  return json;
+}
+
+export async function updateUser (token, updatedUser) {
+  const response = await fetch(`${url}user`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Token ${token}`
+    },
+    body: JSON.stringify({ user: updatedUser })
+  })
+  const json = await response.json();
+  return json;
+};

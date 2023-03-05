@@ -1,15 +1,15 @@
-import {Pagination} from 'antd';
-import {useDispatch, useSelector} from 'react-redux';
+import { Pagination } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Article from '../article/article';
-import { changePage } from '../../actions';
+import { changePage } from '../../toolkitSlice';
 
 import classes from './articles-list.module.scss';
 
 export default function ArticlesList () {
-  const { articles, articlesCount, page } = useSelector(state => state);
+  const { toolkit } = useSelector(state => state);
+  const { articles, articlesCount, page } = toolkit;
   const dispatch = useDispatch();
-
   const onPagination = (value) => {
     dispatch(changePage(value))
   }

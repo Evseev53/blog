@@ -1,15 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { createStore, applyMiddleware } from 'redux';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
 import { BrowserRouter } from 'react-router-dom';
-import thunk from 'redux-thunk';
 
-import reducer from './reducers';
 import App from './components/app/app';
+import toolkitSlice from './toolkitSlice';
 
-const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)))
+const rootReducer = combineReducers({
+  toolkit: toolkitSlice
+})
+
+const store = configureStore({
+  reducer: rootReducer
+});
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
