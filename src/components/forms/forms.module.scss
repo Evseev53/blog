@@ -1,20 +1,44 @@
+.button {
+  width: 118px;
+  height: 40px;
+  border: 1px solid #F5222D;
+  border-radius: 4px;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #F5222D;
+  background-color: #ffffff;
+  margin-left: 17px;
+}
+
+.button--blue {
+  width: 136px;
+  border-color: #1890FF;
+  color: #1890FF;
+}
+
 .container {
   margin: 59px auto 0 auto;
   border: 1px solid #D9D9D9;
   box-shadow: 0px 22px 106px rgba(0, 0, 0, 0.07), 0px 9.19107px 44.2843px rgba(0, 0, 0, 0.0503198), 0px 4.91399px 23.6765px rgba(0, 0, 0, 0.0417275), 0px 2.75474px 13.2728px rgba(0, 0, 0, 0.035), 0px 1.46302px 7.04911px rgba(0, 0, 0, 0.0282725), 0px 0.608796px 2.93329px rgba(0, 0, 0, 0.0196802);
   border-radius: 6px;
   width: 384px;
-  height: 344px;
   background: #ffffff;
   padding: 48px 32px 48px 32px;
+}
+
+.container--l {
+  height: 498px;
 }
 
 .container--xl {
   height: 599px;
 }
 
-.container--l {
-  height: 498px;
+.container--xxl {
+  width: 938px;
 }
 
 .form {
@@ -44,6 +68,11 @@
   color: #8C8C8C;
 }
 
+.label {
+  display: block;
+  margin-top: 20px;
+}
+
 .label-text {
   font-family: 'Roboto', sans-serif;
   font-style: normal;
@@ -61,6 +90,26 @@
   border: 1px solid #D9D9D9;
   border-radius: 4px;
   padding-left: 12px;
+}
+
+.input-xxl {
+  width: 874px;
+}
+
+.textarea {
+  resize: none;
+  height: 168px;
+  width: 874px;
+}
+
+.tags {
+  width: 874px;
+}
+
+.tag {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  justify-items: start;
 }
 
 .submit {

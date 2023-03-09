@@ -1,11 +1,42 @@
-import { Link } from 'react-router-dom';
-import ReactMarkdown from 'react-markdown'
+import { Link, useNavigate } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
+import { useSelector } from 'react-redux';
+import { Popconfirm } from 'antd';
+
+import { deleteArticle } from '../../api-service/api-service';
 
 import classes from './article.module.scss';
 
 export default function Article ({ article, body, fullVersion }) {
   const { title, description, createdAt, tagList, author, favoritesCount, slug } = article;
-  const { username, image, following } = author;
+  const { username, image } = author;
+
+  const { toolkit } = useSelector(state => state);
+  const { user } = toolkit;
+
+  const navigate = useNavigate();
+
+  const onDelete = () => {
+    deleteArticle(user.token, article.slug)
+      .then(json => {
+        navigate('/articles')
+      })
+  }
+
+  const buttons = (
+    <div>
+      <Popconfirm
+        description="Are you sure to delete this task?"
+        placement='right'
+        okText="Yes"
+        cancelText="No"
+        onConfirm={ onDelete }
+      >
+        <button className={classes.button} type='button'>Delete</button>
+      </Popconfirm>
+      <Link to='edit' className={classes.button} type='button'>Edit</Link>
+    </div>
+  )
 
   const getFormatDate = (d) => {
     const date = new Date(d);
@@ -42,12 +73,15 @@ export default function Article ({ article, body, fullVersion }) {
         </p>
         { body ? <ReactMarkdown>{ body }</ReactMarkdown> : null }
       </div>
-      <div className={classes['article-author']}>
-        <div>
-          <span className={classes.name}>{ username }</span>
-          <span className={classes.date}>{ getFormatDate(createdAt) }</span>
+      <div className={classes['article-author-container']}>
+        <div className={classes['article-author']}>
+          <div>
+            <span className={classes.name}>{ username }</span>
+            <span className={classes.date}>{ getFormatDate(createdAt) }</span>
+          </div>
+          <img className={classes.avatar} src={ image } alt="avatar"/>
         </div>
-        <img className={classes.avatar} src={ image } alt="avatar"/>
+        { username === user.username && fullVersion ? buttons : null }
       </div>
     </div>
   )

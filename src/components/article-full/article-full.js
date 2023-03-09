@@ -13,10 +13,13 @@ export default function ArticleFull() {
   const { toolkit } = useSelector(state => state);
   const { fullArticle } = toolkit;
   const { article, body } = fullArticle;
+
   useEffect(() => {
     dispatch(fetchFullArticle(slug))
   }, []);
+
   const content = article ? <Article article={ article } body={ body } fullVersion /> : <div>Идет загрузка</div>;
+
   return(
     <div className={classes['article-full-container']}>
       { content }

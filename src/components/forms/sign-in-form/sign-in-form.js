@@ -32,7 +32,7 @@ export default function SignInForm () {
     <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
       <div className={classes['form-title']}>Sign In</div>
       { error ? <p className={classes['error-message']}>Invalid email or password.</p> : null }
-      <label htmlFor='email'>
+      <label className={classes.label} htmlFor='email'>
         <div className={classes['label-text']}>Email address</div>
         <input
           className={classes.input}
@@ -49,7 +49,7 @@ export default function SignInForm () {
         />
         <p className={classes['error-message']}>{errors.email?.message}</p>
       </label>
-      <label htmlFor='password'>
+      <label className={classes.label} htmlFor='password'>
         <div className={classes['label-text']}>Password</div>
         <input
           className={classes.input}
@@ -60,7 +60,7 @@ export default function SignInForm () {
         />
         <p className={classes['error-message']}>{errors.password?.message}</p>
       </label>
-      <label htmlFor='submit'>
+      <label className={classes.label} htmlFor='submit'>
         <input className={classes.submit} type='submit' id='submit' value='Login'/>
       </label>
       <div className={classes['form-text']}>Don’t have an account? Sign Up.</div>
