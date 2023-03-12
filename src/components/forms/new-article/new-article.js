@@ -1,10 +1,13 @@
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-import { createArticle, updateArticle } from '../../../api-service/api-service';
+import {fetchArticles, fetchNewArticle, fetchUpdateArticle} from '../../../api-service/fetchFunctions';
 import Tag from '../tag/tag';
+import Spinner from '../../spinner/spinner';
 import classes from '../forms.module.scss';
+import { onError } from '../../../toolkitSlice';
 
 export default function NewArticle ({ defaultValues = { article: null, body: null } }) {
   const { article, body } = defaultValues;
@@ -13,10 +16,12 @@ export default function NewArticle ({ defaultValues = { article: null, body: nul
   const [maxID, setID] = useState(1);
 
   const { toolkit } = useSelector(state => state);
-  const { user } = toolkit;
+  const { user, loading, page } = toolkit;
   const { token } = user;
 
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const { register, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
@@ -41,15 +46,14 @@ export default function NewArticle ({ defaultValues = { article: null, body: nul
     if (article?.tagList) {
       createTagList(article.tagList);
     }
+    return () => onError(null)
   }, []);
 
   const addTag = (tag) => {
     if (tags.length < 11) {
-      setID(maxID + 1);
-      const inputValue = (tag.currentTarget.previousSibling.previousSibling.value);
+      setID(prevState => prevState + 1);
       const newTags = [...tags];
-      newTags.splice((newTags.length - 1), 0, {text: inputValue, id: maxID});
-      tag.currentTarget.previousSibling.previousSibling.value = '';
+      newTags.push({text: '', id: maxID});
       setTag(newTags);
     }
   }
@@ -78,7 +82,15 @@ export default function NewArticle ({ defaultValues = { article: null, body: nul
   const onSubmit = (art) => {
     const tagsArr = tags.map(el => el.text);
     const taggedArticle = { ...art, tagList: [...tagsArr] };
-    article === null ? createArticle(taggedArticle, token) : updateArticle(taggedArticle, token, article.slug);
+    const callback = () => {
+      dispatch(fetchArticles(`${page}0`, user.token));
+      navigate('/articles');
+    };
+    if (article === null) {
+      dispatch(fetchNewArticle(taggedArticle, token, callback));
+    } else {
+      dispatch(fetchUpdateArticle(taggedArticle, token, article.slug, callback));
+    }
   }
 
   const tagsList = tags.map((tag, idx) => {
@@ -153,7 +165,7 @@ export default function NewArticle ({ defaultValues = { article: null, body: nul
             { tagsList }
           </label>
           <label className={classes.label} htmlFor='submit'>
-            <input className={classes.submit} type='submit' id='submit' value='Send'/>
+            { loading ? <Spinner /> : <input className={classes.submit} type='submit' id='submit' value='Send'/> }
           </label>
         </div>
       </form>

@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
+import {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
+import { Result } from 'antd';
 
 import Header from '../header/header';
 import ArticlesList from '../articles-list/articles-list';
@@ -23,8 +24,11 @@ function App() {
   const { toolkit } = useSelector(state => state);
   const { page, logged } = toolkit;
 
+  const [online, setOnline] = useState(true);
+
+  const token = sessionStorage.getItem('token');
+
   useEffect(() => {
-    const token = sessionStorage.getItem('token');
     if (token) {
       getCurrentUser(token)
         .then(json => {
@@ -35,33 +39,47 @@ function App() {
   }, []);
 
   useEffect(() => {
-    dispatch(fetchArticles(`${page}0`));
+    dispatch(fetchArticles(`${page}0`, token));
   }, [page]);
+
+  const routes = (
+    <Routes>
+      <Route path='/articles' element={<ArticlesList />} />
+      <Route path='/articles/:slug' element={<ArticleFull />} />
+      <Route path='/articles/:slug/edit' element={
+        <ProtectedRoute logged={ logged }>
+          <EditArticle />
+        </ProtectedRoute>
+      } />
+      <Route path='/sign-in' element={<SignInForm />} />
+      <Route path='/sign-up' element={<SignUpForm />} />
+      <Route path='/profile' element={
+        <ProtectedRoute logged={ logged }>
+          <Profile />
+        </ProtectedRoute>} />
+      <Route path='/new-article' element={
+        <ProtectedRoute logged={ logged }>
+          <NewArticle />
+        </ProtectedRoute>} />
+      <Route path='*' element={<NotFound />} />
+    </Routes>
+  );
+
+  window.addEventListener('offline', (e) => {
+    setOnline(false);
+  });
+
+  window.addEventListener('online', (e) => {
+    setOnline(true);
+  });
 
   return (
     <div className={classes.app}>
       <Header />
       <div className={classes['content-container']}>
-        <Routes>
-          <Route path='/articles' element={<ArticlesList />} />
-          <Route path='/articles/:slug' element={<ArticleFull />} />
-          <Route path='/articles/:slug/edit' element={
-            <ProtectedRoute logged={ logged }>
-              <EditArticle />
-            </ProtectedRoute>
-          } />
-          <Route path='/sign-in' element={<SignInForm />} />
-          <Route path='/sign-up' element={<SignUpForm />} />
-          <Route path='/profile' element={
-            <ProtectedRoute logged={ logged }>
-              <Profile />
-            </ProtectedRoute>} />
-          <Route path='/new-article' element={
-            <ProtectedRoute logged={ logged }>
-              <NewArticle />
-            </ProtectedRoute>} />
-          <Route path='*' element={<NotFound />} />
-        </Routes>
+        { online ?
+          routes :
+          <Result status="warning" title="There are some problems with your operation."/> }
       </div>
     </div>
   );

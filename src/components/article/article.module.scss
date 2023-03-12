@@ -1,11 +1,13 @@
+@import '../../variables/variables';
+
 .article {
   display: grid;
   grid-template-columns: 65% auto;
   justify-items: start;
   width: 941px;
-  background: #ffffff;
+  background: $bg-article;
   border-radius: 5px;
-  box-shadow: 2px 2px 5px 1px rgba(0,0,0,0.3);
+  box-shadow: 2px 2px 5px 1px $shadow-article;
   padding: 15px 14px 24px 19px;
   margin-top: 26px;
 }
@@ -16,38 +18,58 @@
   justify-items: start;
   width: 941px;
   min-height: 870px;
-  background: #ffffff;
-  box-shadow: 2px 2px 5px 1px rgba(0,0,0,0.3);
+  background: $bg-article;
+  box-shadow: 2px 2px 5px 1px $shadow-article;
   padding: 15px 14px 24px 19px;
   margin-top: 26px;
 }
 
 .article-title {
+  text-decoration: none;
   font-family: 'Inter UI', sans-serif;
   font-size: 20px;
   line-height: 28px;
-  color: #1890FF;
+  color: $title;
+}
+
+.title-text {
+  display: block;
+  overflow-wrap: anywhere;
+  max-width: 700px;
 }
 
 .article-likes {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-items: start;
+  align-items: center;
+  vertical-align: middle;
+  padding-left: 13px;
+
+}
+
+.article-likes-num {
   font-family: 'Inter UI', sans-serif;
   font-size: 12px;
   line-height: 22px;
-  color: rgba(0, 0, 0, 0.75);
+  color: $text-like;
+  padding-left: 5px;
 }
 
 .article-tag {
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  display: inline-block;
+  border: 1px solid $tag;
   border-radius: 2px;
   font-family: 'Inter', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
   line-height: 15px;
-  color: rgba(0, 0, 0, 0.5);
+  color: $tag;
   width: max-content;
   padding: 0 2px 0 2px;
   margin-right: 8px;
+  margin-top: 3px;
 }
 
 .article-author-container {
@@ -61,19 +83,58 @@
   justify-self: end;
 }
 
+.article-head {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-items: start;
+  align-items: center;
+  max-width: max-content;
+}
+
+.article-body {
+  max-width: 700px;
+  overflow-wrap: anywhere;
+}
+
+.buttons-container {
+  display: grid;
+  padding-top: 30px;
+  grid-template-columns: auto auto;
+  align-items: center;
+}
+
 .button {
+  text-decoration: none;
+  text-align: center;
   width: 78px;
   height: 31px;
-  border: 1px solid #F5222D;
+  border: 1px solid $btn-del;
   border-radius: 4px;
   font-family: 'Roboto', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  color: #F5222D;
-  background-color: #ffffff;
+  color: $btn-del;
+  background-color: $bg-article;
   margin-left: 17px;
+  cursor: pointer;
+}
+
+.button--edit {
+  border-color: $btn-edit;
+  color: $btn-edit;
+}
+
+.button-text {
+  vertical-align: middle;
+  align-self: center;
+}
+
+.button--no-style {
+  border: none;
+  background: none;
+  cursor: pointer;
 }
 
 .name {
@@ -83,7 +144,7 @@
   font-family: 'Inter UI', sans-serif;
   font-size: 18px;
   line-height: 28px;
-  color: rgba(0, 0, 0, 0.85);
+  color: $profile-name;
   padding-right: 12px;
 }
 
@@ -94,7 +155,7 @@
   font-family: 'Inter UI', sans-serif;
   font-size: 12px;
   line-height: 22px;
-  color: rgba(0, 0, 0, 0.5);
+  color: $tag;
   padding-right: 12px;
 }
 
@@ -108,9 +169,12 @@
   font-family: 'Inter UI', sans-serif;
   font-size: 12px;
   line-height: 22px;
-  color: rgba(0, 0, 0, 0.75);
+  color: $text-like;
+  overflow-wrap: anywhere;
+  max-width: 700px;
 }
 
 .tags-list {
-  display: flex;
+  overflow-wrap: anywhere;
+  max-width: 700px;
 }

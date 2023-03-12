@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import classes from '../forms.module.scss';
 import { fetchNewUser } from '../../../api-service/fetchFunctions';
@@ -123,7 +124,9 @@ export default function SignUpForm () {
       <label htmlFor='submit'>
         <input className={classes.submit} type='submit' id='submit' value='Create' disabled={ checked }/>
       </label>
-      <div className={classes['form-text']}>Don’t have an account? Sign Up.</div>
+      <div className={classes['form-text']}>
+        Already have an account? <Link className={classes['sign-link']} to='/sign-in'>Sign In.</Link>
+      </div>
     </form>
   );
 

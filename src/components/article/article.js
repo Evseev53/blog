@@ -1,30 +1,41 @@
 import { Link, useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Popconfirm } from 'antd';
+import _ from 'lodash';
 
 import { deleteArticle } from '../../api-service/api-service';
+import { fetchArticles, fetchLike } from '../../api-service/fetchFunctions';
+import heart from '../../images/heart.svg';
+import heartRed from '../../images/heart_red.svg';
 
 import classes from './article.module.scss';
 
 export default function Article ({ article, body, fullVersion }) {
-  const { title, description, createdAt, tagList, author, favoritesCount, slug } = article;
+  const { title, description, createdAt, tagList, author, favorited, favoritesCount, slug } = article;
   const { username, image } = author;
 
   const { toolkit } = useSelector(state => state);
-  const { user } = toolkit;
+  const { user, page } = toolkit;
 
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
 
   const onDelete = () => {
     deleteArticle(user.token, article.slug)
       .then(json => {
-        navigate('/articles')
+        navigate('/articles');
+        dispatch(fetchArticles(`${page}0`, user.token));
       })
   }
 
+  const onLike = () => {
+    dispatch(fetchLike(user.token, article.slug, favorited));
+  }
+
   const buttons = (
-    <div>
+    <div className={classes['buttons-container']}>
       <Popconfirm
         description="Are you sure to delete this task?"
         placement='right'
@@ -32,9 +43,11 @@ export default function Article ({ article, body, fullVersion }) {
         cancelText="No"
         onConfirm={ onDelete }
       >
-        <button className={classes.button} type='button'>Delete</button>
+        <button className={classes.button} type='button'><span className={classes['button-text']}>Delete</span></button>
       </Popconfirm>
-      <Link to='edit' className={classes.button} type='button'>Edit</Link>
+      <Link to='edit' className={`${classes['button--edit']} ${classes.button}`}>
+        <span className={classes['button-text']}>Edit</span>
+      </Link>
     </div>
   )
 
@@ -49,20 +62,36 @@ export default function Article ({ article, body, fullVersion }) {
     return date.toLocaleString('en-US', options);
   }
 
+  const cutStr = (str) => {
+    const copyStr = str;
+    return _.truncate(copyStr, {length: 75, omission: ' ...'})
+  }
+
+  let id = 0;
+
   const tagsElList = tagList.map(el => {
-    return(
-      <div className={classes['article-tag']}>{ el }</div>
-    )
-  })
+    id += 1;
+    if (el.length) {
+      return(
+        <div key={ id.toString() } className={classes['article-tag']}>{ cutStr(el) }</div>
+      )
+    }
+  });
 
   return(
     <div className={fullVersion ? classes['article-full'] : classes.article}>
       <div>
-        <div>
-          <Link to={`/articles/${slug}`} className={classes['article-title']}>{ title }</Link>
-          <span>
-            <span> &#x2661; </span>
-            <span className={classes['article-likes']}>{ favoritesCount }</span>
+        <div className={classes['article-head']}>
+          <Link to={`/articles/${slug}`} className={classes['article-title']}>
+            <span className={classes['title-text']}>{ title }</span>
+          </Link>
+          <span className={classes['article-likes']}>
+            <button className={classes['button--no-style']} type='button' onClick={ onLike } onKeyDown={ onLike }>
+              <img src={ favorited ? heartRed : heart } alt="like" />
+            </button>
+            <span className={classes['article-likes-num']}>
+              { favoritesCount }
+            </span>
           </span>
         </div>
         <div className={classes['tags-list']}>
@@ -71,7 +100,7 @@ export default function Article ({ article, body, fullVersion }) {
         <p className={classes.text}>
           { description }
         </p>
-        { body ? <ReactMarkdown>{ body }</ReactMarkdown> : null }
+        <p className={classes['article-body']}>{ body ? <ReactMarkdown>{ body }</ReactMarkdown> : null }</p>
       </div>
       <div className={classes['article-author-container']}>
         <div className={classes['article-author']}>
@@ -79,7 +108,7 @@ export default function Article ({ article, body, fullVersion }) {
             <span className={classes.name}>{ username }</span>
             <span className={classes.date}>{ getFormatDate(createdAt) }</span>
           </div>
-          <img className={classes.avatar} src={ image } alt="avatar"/>
+          <img className={classes.avatar} alt="avatar" src={ image }/>
         </div>
         { username === user.username && fullVersion ? buttons : null }
       </div>

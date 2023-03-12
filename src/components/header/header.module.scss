@@ -1,3 +1,5 @@
+@import '../../variables/variables';
+
 .header {
   display: grid;
   grid-template-columns: auto auto;
@@ -12,11 +14,12 @@
 }
 
 .title {
+  text-decoration: none;
   justify-self: start;
   font-family: 'Inter UI', sans-serif;
   font-size: 18px;
   line-height: 28px;
-  color: rgba(0, 0, 0, 0.85);
+  color: $profile-name;
 }
 .buttons {
   display: grid;
@@ -34,7 +37,12 @@
   font-family: 'Inter UI', sans-serif;
   font-size: 18px;
   line-height: 28px;
-  color: rgba(0, 0, 0, 0.85);
+  color: $profile-name;
+}
+
+.button-in:hover {
+  opacity: 0.5;
+  cursor: pointer;
 }
 
 .button-up {
@@ -44,13 +52,18 @@
   justify-self: end;
   width: 109px;
   height: 51px;
-  border: 1px solid #52C41A;
+  border: 1px solid $btn-edit;
   border-radius: 5px;
   font-family: 'Inter UI', sans-serif;
   font-size: 18px;
   line-height: 28px;
-  color: #52C41A;
-  background: #FFFFFF;
+  color: $btn-edit;
+  background: $bg-article;
+}
+
+.button-up:hover {
+  opacity: 0.5;
+  cursor: pointer;
 }
 
 .button-out {
@@ -61,26 +74,44 @@
   font-family: 'Inter UI', sans-serif;
   font-size: 18px;
   line-height: 28px;
-  color: rgba(0, 0, 0, 0.75);
-  background: #FFFFFF;
+  color: $text-like;
+  background: $bg-article;
+}
+
+.button-out:hover {
+  opacity: 0.5;
+  cursor: pointer;
 }
 
 .button-crt {
+  display: grid;
+  text-decoration: none;
+  text-align: center;
   align-self: center;
   width: 112px;
   height: 31px;
-  border: 1px solid #52C41A;
+  border: 1px solid $btn-edit;
   border-radius: 5px;
   font-family: 'Inter UI', sans-serif;
   font-size: 14px;
   line-height: 22px;
-  color: #52C41A;
-  background: #FFFFFF;
+  color: $btn-edit;
+  background: $bg-article;
+  margin-right: 26px;
+}
+
+.button-crt:hover {
+  opacity: 0.5;
+  cursor: pointer;
 }
 
 .button-text {
   vertical-align: middle;
   align-self: center;
+}
+
+.button-text:hover {
+  cursor: pointer;
 }
 
 .profile {
@@ -89,16 +120,26 @@
 }
 
 .name {
+  text-decoration: none;
   font-family: 'Inter UI', sans-serif;
   font-size: 18px;
   line-height: 28px;
-  color: rgba(0, 0, 0, 0.85);
+  color: $profile-name;
   padding-right: 12px;
   align-self: center;
+}
+
+.name:hover {
+  cursor: pointer;
 }
 
 .avatar {
   width: 46px;
   height: 46px;
   border-radius: 50%;
+  margin-right: 26px;
+}
+
+.avatar:hover {
+  cursor: pointer;
 }

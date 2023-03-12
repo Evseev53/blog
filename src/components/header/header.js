@@ -2,13 +2,13 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { addUser, loggedOut } from '../../toolkitSlice';
-import imgavatar from '../../images/imgavatar.png';
+import { fetchArticles } from '../../api-service/fetchFunctions';
 
 import classes from './header.module.scss';
 
 export default function Header () {
   const { toolkit } = useSelector(state => state);
-  const { logged, user } = toolkit;
+  const { logged, user, page } = toolkit;
   const dispatch = useDispatch();
 
   const buttons = (
@@ -24,12 +24,20 @@ export default function Header () {
     dispatch(addUser({}));
   };
 
+  const updateArticlesList = () => {
+    dispatch(fetchArticles(`${page}0`, user.token));
+  }
+
+  const imgUrl = 'https://static.productionready.io/images/smiley-cyrus.jpg';
+
   const profile = (
     <div className={classes.profile}>
-      <button className={classes['button-crt']} type='button'>Create article</button>
+      <Link to='/new-article' className={classes['button-crt']} type='button'>
+        <span className={classes['button-text']}>Create article</span>
+      </Link>
       <Link to='/profile' className={classes.name}>{ user.username }</Link>
       <Link to='/profile'>
-        <img className={classes.avatar} src={ user.image ? user.image : imgavatar } alt='avatar'/>
+        <img className={classes.avatar} src={ user.image ? user.image : imgUrl } alt='avatar'/>
       </Link>
       <button className={classes['button-out']} type='button' onClick={ onLogOut }>Log Out</button>
     </div>
@@ -39,7 +47,7 @@ export default function Header () {
 
   return (
     <header className={classes.header}>
-      <div className={classes.title}>Realworld Blog</div>
+      <Link to='/articles' onClick={updateArticlesList} className={classes.title}>Realworld Blog</Link>
       <div className={classes['header-buttons']}>{ content }</div>
     </header>
   )

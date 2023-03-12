@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 import classes from '../forms.module.scss';
 import { fetchUserLogin } from '../../../api-service/fetchFunctions';
@@ -63,7 +64,9 @@ export default function SignInForm () {
       <label className={classes.label} htmlFor='submit'>
         <input className={classes.submit} type='submit' id='submit' value='Login'/>
       </label>
-      <div className={classes['form-text']}>Don’t have an account? Sign Up.</div>
+      <div className={classes['form-text']}>
+        Don’t have an account? <Link className={classes['sign-link']} to='/sign-up'>Sign Up.</Link>
+      </div>
     </form>
   );
 

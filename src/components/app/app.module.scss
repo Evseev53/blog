@@ -1,3 +1,4 @@
+@import '../../variables/variables';
 body {
   margin: 0;
 }
@@ -7,7 +8,7 @@ body {
 
 .content-container {
   display: block;
-  background: #EBEEF3;
+  background: $bg-app;
   min-height: 1000px;
   min-width: 100%;
   padding: 1px;

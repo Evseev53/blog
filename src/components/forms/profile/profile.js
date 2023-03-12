@@ -1,17 +1,27 @@
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import {useEffect, useState} from 'react';
 
 import { fetchUpdateUser } from '../../../api-service/fetchFunctions';
 import classes from '../forms.module.scss';
 import { onError } from '../../../toolkitSlice';
 
 export default function Profile () {
-  const { register, handleSubmit, formState: { errors } } = useForm();
   const dispatch = useDispatch();
 
   const { toolkit } = useSelector(state => state);
   const { user, error } = toolkit;
+
+  const [updated, setUpdated] = useState(false);
+
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    defaultValues: {
+      username: user?.username,
+      email: user?.email,
+      password: user?.password,
+      image: user?.image
+    }
+  });
 
   useEffect(() => {
     return () => {
@@ -20,13 +30,17 @@ export default function Profile () {
   }, [])
 
   const onSubmit = (e) => {
-    dispatch(fetchUpdateUser(user.token, e));
+    const callback = () => {
+      setUpdated(true);
+    }
+    dispatch(fetchUpdateUser(user.token, e, callback));
   };
 
   return (
     <div className={`${classes.container} ${classes['container--l']}`}>
       <form className={classes.form} onSubmit={handleSubmit(onSubmit)} >
         <div className={classes['form-title']}>Edit Profile</div>
+        { updated ? <p className={classes.message}>Successfully updated.</p> : null }
         <label htmlFor='username'>
           <div className={classes['label-text']}>Username</div>
           <input

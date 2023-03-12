@@ -1,21 +1,19 @@
 const url = 'https://blog.kata.academy/api/';
 
-export async function getArticles (limit) {
-  const response = await fetch(`${url}articles/?limit=${limit}`);
-  if (response.ok) {
-    const json = await response.json();
-    return json;
-  }
-  return console.error(response.status);
+export async function getArticles (limit, token) {
+  const response = await fetch(`${url}articles/?limit=${limit}`,{
+    headers: {Authorization: `Token ${token}`}
+  });
+  const json = await response.json();
+  return json;
 }
 
-export async function getFullArticle (slug) {
-  const response = await fetch(`${url}articles/${slug}`);
-  if (response.ok) {
-    const json = await response.json();
-    return json;
-  }
-  return console.error(response.status);
+export async function getFullArticle (slug, token) {
+  const response = await fetch(`${url}articles/${slug}`,{
+    headers: {Authorization: `Token ${token}`}
+  });
+  const json = await response.json();
+  return json;
 }
 
 export async function createArticle (newArticle, token) {
@@ -45,15 +43,19 @@ export async function updateArticle (newArticle, token, slug) {
 }
 
 export async function deleteArticle (token, slug) {
-  const response = await fetch(`${url}articles/${slug}`, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Token ${token}`
-    }
-  })
-  const json = await response.json();
-  return json;
+  try {
+    const response = await fetch(`${url}articles/${slug}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token}`
+      }
+    })
+    const json = await response.json();
+    return json;
+  } catch (e) {
+    return e;
+  }
 }
 
 export async function sendNewUser (newUser) {
@@ -100,3 +102,27 @@ export async function updateUser (token, updatedUser) {
   const json = await response.json();
   return json;
 };
+
+export async function sendLike (token, slug) {
+  const response = await fetch(`${url}articles/${slug}/favorite`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Token ${token}`
+    }
+  })
+  const json = await response.json();
+  return json;
+}
+
+export async function sendDislike (token, slug) {
+  const response = await fetch(`${url}articles/${slug}/favorite`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Token ${token}`
+    }
+  })
+  const json = await response.json();
+  return json;
+}

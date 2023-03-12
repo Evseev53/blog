@@ -20,7 +20,8 @@ const toolkitSlice = createSlice({
       bio: null,
       image: null
     },
-    error: null
+    error: null,
+    loading: true
   },
   reducers: {
     addArticles(state, action) {
@@ -37,6 +38,14 @@ const toolkitSlice = createSlice({
         article: action.payload,
         body: action.payload.body
       }
+    },
+    toggleLike(state, action) {
+      state.articles = state.articles.map(article => {
+        if (article.slug === action.payload.slug) {
+          return action.payload
+        }
+        return article
+      })
     },
     addToken(state, action) {
       state.token = action.payload
@@ -55,6 +64,9 @@ const toolkitSlice = createSlice({
     },
     onError(state, action) {
       state.error = action.payload
+    },
+    toggleLoading(state, action) {
+      state.loading = action.payload
     }
   }
 });
@@ -65,10 +77,12 @@ export const {
   changePage,
   addArticlesCount,
   addFullArticle,
+  toggleLike,
   addToken,
   loggedOn,
   loggedOut,
   newUserCreated,
   addUser,
-  onError
+  onError,
+  toggleLoading
 } = toolkitSlice.actions
